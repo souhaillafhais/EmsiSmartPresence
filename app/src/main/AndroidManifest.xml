@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmsiSmartPresence"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".Signin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

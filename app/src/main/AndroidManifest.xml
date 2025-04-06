@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,15 +16,39 @@
         android:theme="@style/Theme.EmsiSmartPresence"
         tools:targetApi="31">
 
+        <!-- Activité d'inscription -->
+        <activity
+            android:name=".register"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Activité de connexion (écran principal) -->
         <activity
             android:name=".Signin"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateVisible">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activité principale après connexion -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Service Firebase (si utilisé) -->
+        <service
+            android:name="com.google.firebase.components.ComponentDiscoveryService"
+            android:exported="false">
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
     </application>
 
 </manifest>

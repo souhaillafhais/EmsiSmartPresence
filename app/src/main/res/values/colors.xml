@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#4CAF50</color>    <!-- Material Green 500 -->
+    <color name="colorPrimaryDark">#388E3C</color> <!-- Material Green 700 -->
+    <color name="colorAccent">#8BC34A</color>     <!-- Material Light Green 500 -->
+    <color name="colorBackground">#E8F5E9</color> <!-- Material Green 50 -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="lightGray">#F5F5F5</color>
+    <color name="darkGreen">#2E7D32</color>       <!-- Material Green 800 -->
+    <color name="lightGreen">#C8E6C9</color>      <!-- Material Green 100 -->
+
+
+
     <color name="green">#008000</color>
 
     <color name="gray">#FF9E9E9E</color>

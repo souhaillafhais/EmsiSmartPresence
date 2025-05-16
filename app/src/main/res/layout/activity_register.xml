@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inscription"
+        android:text="Inscription Professeur"
         android:textSize="24sp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -30,11 +30,11 @@
         android:id="@+id/et_fullname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Nom complet"
-        android:padding="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/input_background"
+        android:hint="Nom complet"
         android:inputType="textPersonName"
-        android:layout_marginTop="20dp" />
+        android:padding="10dp" />
 
     <!-- Email -->
     <EditText
@@ -69,7 +69,47 @@
         android:inputType="textPassword"
         android:padding="10dp" />
 
-    <!-- Bouton d'inscription -->
+    <!-- Department Dropdown -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/department_dropdown_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/department_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:padding="10dp"
+            android:hint="Département"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campus Dropdown -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campus_dropdown_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/campus_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:padding="10dp"
+            android:hint="Campus"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Register Button -->
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
@@ -77,10 +117,10 @@
         android:text="S'inscrire"
         android:textSize="16sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/darkGreen"
         android:layout_marginTop="20dp" />
 
-    <!-- Lien vers login -->
+    <!-- Login Text Link -->
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
@@ -91,4 +131,5 @@
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_marginTop="20dp" />
+
 </LinearLayout>

@@ -49,6 +49,8 @@
             android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" /> <!-- Service Firebase (si utilisé) -->
+        <activity
+            android:name=".RattrapageActivity" />
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:exported="false">

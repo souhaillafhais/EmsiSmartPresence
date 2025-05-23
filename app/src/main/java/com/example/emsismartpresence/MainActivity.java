@@ -2,6 +2,8 @@ package com.example.emsismartpresence;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
+import androidx.cardview.widget.CardView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvWelcomeHeader, tvDepartment, tvEmail, tvCampus;
+    private CardView learnCard;
 
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -32,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
         tvDepartment = findViewById(R.id.tvDepartment);
         tvEmail = findViewById(R.id.tvEmail);
         tvCampus = findViewById(R.id.tvCampus);
+        learnCard = findViewById(R.id.learnCard);
+
+        // Set click listener for the absence card
+        learnCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
+            startActivity(intent);
+        });
 
         // Get current user
         FirebaseUser currentUser = auth.getCurrentUser();

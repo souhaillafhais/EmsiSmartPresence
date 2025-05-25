@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/titleApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="💬 Assistant Virtuel"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/inputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleApp"
+        android:orientation="horizontal"
+        android:background="@drawable/input_background"
+        android:elevation="4dp"
+        android:layout_marginBottom="16dp">
+
+        <EditText
+            android:id="@+id/inputMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="48dp"
+            android:hint="Tapez votre message..."
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:padding="12dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="4"/>
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/rounded_button"
+            android:text="➤"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:elevation="8dp"
+            android:stateListAnimator="@null"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/responseTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputContainer"
+        android:text="Réponse"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/responseTitle"
+        android:background="@drawable/response_background"
+        android:padding="12dp"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/responseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Votre réponse apparaîtra ici..."
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"/>
+    </ScrollView>
+</RelativeLayout>

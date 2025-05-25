@@ -49,5 +49,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-firestore:24.9.1")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("org.json:json:20220320")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
 }

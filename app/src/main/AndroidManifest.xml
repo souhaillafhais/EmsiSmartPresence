@@ -51,8 +51,6 @@
             android:windowSoftInputMode="adjustResize" /> <!-- Service Firebase (si utilisé) -->
         <activity
             android:name=".RattrapageActivity" />
-        <activity android:name=".WeeklyScheduleActivity" />
-
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:exported="false">

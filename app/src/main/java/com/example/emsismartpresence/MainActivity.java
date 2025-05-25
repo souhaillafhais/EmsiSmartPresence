@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvWelcomeHeader, tvDepartment, tvEmail, tvCampus;
-    private CardView learnCard;
+    private CardView learnCard, contributeCard;
 
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -36,10 +36,18 @@ public class MainActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvCampus = findViewById(R.id.tvCampus);
         learnCard = findViewById(R.id.learnCard);
+        contributeCard = findViewById(R.id.contributeCard); // 🆕
+
 
         // Set click listener for the absence card
         learnCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
+            startActivity(intent);
+        });
+
+        // Set click listener for the planning card
+        contributeCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WeeklyScheduleActivity.class); // 🆕
             startActivity(intent);
         });
 

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -16,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmsiSmartPresence"
         tools:targetApi="31">
-        <activity
-            android:name=".AssistantVirtuelActivity"
-            android:exported="false" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -52,14 +49,8 @@
             android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" /> <!-- Service Firebase (si utilisé) -->
-        <activity android:name=".RattrapageActivity" />
-
-        <activity android:name=".WeeklyScheduleActivity" android:exported="false" />
-
-        <activity android:name=".Vacances" />
-
-        <activity android:name=".DocumentActivity" android:exported="false" />
-
+        <activity
+            android:name=".RattrapageActivity" />
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:exported="false">

@@ -1,9 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="@color/lightGreen"
+    android:layout_marginVertical="6dp"
+    android:elevation="2dp"
+    android:clipToPadding="false"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:backgroundTint="@color/lightGreen"
+    android:shape="rectangle"
+    android:radius="8dp">
 
     <TextView
         android:id="@+id/txtTitre"
@@ -11,18 +22,31 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Titre du document"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textColor="@color/darkGreen"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnVoir"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Voir" />
+        android:layout_height="40dp"
+        android:text="Voir"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/colorPrimary"
+        android:paddingHorizontal="16dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="sans-serif-medium"/>
 
     <Button
         android:id="@+id/btnTelecharger"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Télécharger"
-        android:layout_marginStart="8dp"/>
+        android:textColor="@color/black"
+        android:backgroundTint="@color/black"
+        android:paddingHorizontal="16dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="sans-serif-medium"/>
 </LinearLayout>

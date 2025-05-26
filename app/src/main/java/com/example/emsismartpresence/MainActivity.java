@@ -1,28 +1,33 @@
 package com.example.emsismartpresence;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.ImageView;
+import android.content.Intent;
 import androidx.cardview.widget.CardView;
+import androidx.appcompat.app.AlertDialog;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvWelcomeHeader, tvDepartment, tvEmail, tvCampus;
-    private CardView learnCard, assistantCard, planingCard, documentCard, mapCard, vacancesCard;
+    private CardView learnCard, contributeCard, assistantCard, vacancesCard, documentCard;
+    private ImageView logoutIcon;
+
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);  // your layout file name
 
         // Initialize Firestore and Auth
         db = FirebaseFirestore.getInstance();
@@ -34,43 +39,42 @@ public class MainActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvCampus = findViewById(R.id.tvCampus);
         learnCard = findViewById(R.id.learnCard);
-        assistantCard = findViewById(R.id.assistantCard);
-        planingCard = findViewById(R.id.contributeCard);
-        documentCard = findViewById(R.id.practiceCard);
-        mapCard = findViewById(R.id.interestsCard);
-
+        contributeCard = findViewById(R.id.contributeCard); // Planning card
+        assistantCard = findViewById(R.id.assistantCard); // Assistant card
         vacancesCard = findViewById(R.id.vacancesCard);
+        documentCard = findViewById(R.id.practiceCard);
+        logoutIcon = findViewById(R.id.logoutIcon); // Initialize logout icon
 
-        vacancesCard.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Vacances.class);
-            startActivity(intent);
-        });
-
-        // Set click listeners
-        learnCard.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
-            startActivity(intent);
-        });
-
-        assistantCard.setOnClickListener(v -> {
-            launchAssistant();
-        });
-
-        planingCard.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, WeeklyScheduleActivity.class);
-            startActivity(intent);
-        });
+        // Set up logout functionality
+        setupLogoutButton();
 
         documentCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, DocumentActivity.class);  // Vérifie que le nom est bien DocumentActivity
             startActivity(intent);
         });
 
-        mapCard.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        vacancesCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Vacances.class);
             startActivity(intent);
         });
 
+        // Set click listener for the planning card
+        contributeCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WeeklyScheduleActivity.class);
+            startActivity(intent);
+        });
+
+        // Set click listener for the assistant card
+        assistantCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AssistantVirtuelActivity.class);
+            startActivity(intent);
+        });
+
+        // Set click listener for the absence card
+        learnCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
+            startActivity(intent);
+        });
 
         // Get current user
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -80,14 +84,41 @@ public class MainActivity extends AppCompatActivity {
             fetchUserData(userId);
         } else {
             Toast.makeText(this, "No user signed in", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, Signin.class));
-            finish();
+            // Here you can redirect to login screen if needed
+            redirectToLogin();
         }
     }
 
-    private void launchAssistant() {
-        Intent intent = new Intent(MainActivity.this, AssistantVirtuelActivity.class);
+    private void setupLogoutButton() {
+        logoutIcon.setOnClickListener(v -> showLogoutConfirmationDialog());
+    }
+
+    private void showLogoutConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes", (dialog, which) -> performLogout())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    private void performLogout() {
+        // Sign out from Firebase
+        auth.signOut();
+
+        // Show logout success message
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+        // Redirect to login screen
+        redirectToLogin();
+    }
+
+    private void redirectToLogin() {
+        // Replace LoginActivity.class with your actual login activity class name
+        Intent intent = new Intent(MainActivity.this, Signin.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish(); // Close the current activity
     }
 
     private void fetchUserData(String userId) {

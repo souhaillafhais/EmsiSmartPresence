@@ -49,8 +49,15 @@
             android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" /> <!-- Service Firebase (si utilisé) -->
-        <activity
-            android:name=".RattrapageActivity" />
+
+        <!-- Activité pour la carte -->
+        <activity android:name=".RattrapageActivity" />
+        <activity android:name=".WeeklyScheduleActivity" android:exported="false" />
+        <activity android:name=".AssistantVirtuelActivity" android:exported="false" />
+        <activity android:name=".Vacances" />
+
+
+
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:exported="false">

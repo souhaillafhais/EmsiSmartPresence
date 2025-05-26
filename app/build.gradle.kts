@@ -52,5 +52,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("org.json:json:20220320")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("com.android.volley:volley:1.2.1")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
 
 }

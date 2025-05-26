@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/txtTitre"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Titre du document"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btnVoir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voir" />
+
+    <Button
+        android:id="@+id/btnTelecharger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Télécharger"
+        android:layout_marginStart="8dp"/>
+</LinearLayout>

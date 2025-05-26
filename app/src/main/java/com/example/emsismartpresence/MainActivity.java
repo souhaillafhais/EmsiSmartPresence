@@ -1,30 +1,28 @@
 package com.example.emsismartpresence;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import androidx.cardview.widget.CardView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvWelcomeHeader, tvDepartment, tvEmail, tvCampus;
-    private CardView learnCard;
-
+    private CardView learnCard, assistantCard, planingCard, documentCard, mapCard, vacancesCard;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);  // your layout file name
+        setContentView(R.layout.activity_main);
 
         // Initialize Firestore and Auth
         db = FirebaseFirestore.getInstance();
@@ -36,12 +34,43 @@ public class MainActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvCampus = findViewById(R.id.tvCampus);
         learnCard = findViewById(R.id.learnCard);
+        assistantCard = findViewById(R.id.assistantCard);
+        planingCard = findViewById(R.id.contributeCard);
+        documentCard = findViewById(R.id.practiceCard);
+        mapCard = findViewById(R.id.interestsCard);
 
-        // Set click listener for the absence card
+        vacancesCard = findViewById(R.id.vacancesCard);
+
+        vacancesCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Vacances.class);
+            startActivity(intent);
+        });
+
+        // Set click listeners
         learnCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
             startActivity(intent);
         });
+
+        assistantCard.setOnClickListener(v -> {
+            launchAssistant();
+        });
+
+        planingCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WeeklyScheduleActivity.class);
+            startActivity(intent);
+        });
+
+        documentCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DocumentActivity.class);  // Vérifie que le nom est bien DocumentActivity
+            startActivity(intent);
+        });
+
+        mapCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
+        });
+
 
         // Get current user
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -51,8 +80,14 @@ public class MainActivity extends AppCompatActivity {
             fetchUserData(userId);
         } else {
             Toast.makeText(this, "No user signed in", Toast.LENGTH_LONG).show();
-            // Here you can redirect to login screen if needed
+            startActivity(new Intent(this, Signin.class));
+            finish();
         }
+    }
+
+    private void launchAssistant() {
+        Intent intent = new Intent(MainActivity.this, AssistantVirtuelActivity.class);
+        startActivity(intent);
     }
 
     private void fetchUserData(String userId) {

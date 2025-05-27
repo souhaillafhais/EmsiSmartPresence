@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/background"
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <!-- 1 dp padding makes the background thinner -->
+        <shape>
+            <corners android:radius="1dp" />
+            <solid android:color="@color/progress_background" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <!-- For circular endings, the radius must be a half of the heigh -->
+                <corners android:radius="2dp" />
+                <solid android:color="@color/progress_level" />
+            </shape>
+        </scale>
+    </item>
+
+</layer-list>

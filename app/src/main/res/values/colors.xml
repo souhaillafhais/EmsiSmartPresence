@@ -9,11 +9,12 @@
     <color name="lightGray">#F5F5F5</color>
     <color name="darkGreen">#2E7D32</color>       <!-- Material Green 800 -->
     <color name="lightGreen">#C8E6C9</color>      <!-- Material Green 100 -->
-
+    <color name="progress_background">#FF9E9E9E</color>
 
 
     <color name="red">#F44336</color>
     <color name="green">#008000</color>
+    <color name="progress_level">#008000</color>
 
     <color name="gray">#FF9E9E9E</color>
 

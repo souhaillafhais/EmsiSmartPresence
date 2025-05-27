@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, maps.class);
             startActivity(intent);
         });
+        presenceCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, GroupListActivity.class);
+            startActivity(intent);
+        });
 
     }
 

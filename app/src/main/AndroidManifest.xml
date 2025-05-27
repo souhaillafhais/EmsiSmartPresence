@@ -24,10 +24,6 @@
             android:name=".maps"
             android:exported="false" />
 
-        <activity
-            android:name=".AttendanceActivity"
-            android:exported="false" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDJdXj6_SrvknoeQmfrBXJ8MN-I4oHobbE" />

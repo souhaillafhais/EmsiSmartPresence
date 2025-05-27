@@ -51,15 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setupLogoutButton();
         setupCardListeners();
 
-        // Charger les données utilisateur et le groupe
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            fetchUserData(currentUser.getUid());
-            fetchUserGroup(currentUser.getUid()); // Nouvelle méthode pour récupérer le groupe
-        } else {
-            Toast.makeText(this, "No user signed in", Toast.LENGTH_LONG).show();
-            redirectToLogin();
-        }
+
     }
 
     private void setupCardListeners() {
@@ -93,34 +85,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        presenceCard.setOnClickListener(v -> {
-            if (!currentGroupId.isEmpty()) {
-                Intent intent = new Intent(MainActivity.this, GroupListActivity.class);
-                intent.putExtra("GROUP_ID", currentGroupId);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Groupe non disponible", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // Nouvelle méthode pour récupérer le groupe de l'utilisateur
-    private void fetchUserGroup(String userId) {
-        db.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Supposons que l'utilisateur a un champ 'groups' avec une liste d'IDs de groupes
-                        // Nous prenons le premier groupe pour cet exemple
-                        List<String> groups = (List<String>) documentSnapshot.get("groups");
-                        if (groups != null && !groups.isEmpty()) {
-                            currentGroupId = groups.get(0); // Prend le premier groupe
-                        }
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erreur de chargement du groupe", Toast.LENGTH_SHORT).show();
-                });
     }
 
     // ... [Le reste de vos méthodes existantes (setupLogoutButton, showLogoutConfirmationDialog, etc.)] ...

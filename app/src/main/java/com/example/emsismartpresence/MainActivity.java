@@ -1,4 +1,5 @@
 package com.example.emsismartpresence;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -6,50 +7,64 @@ import android.widget.ImageView;
 import android.content.Intent;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.app.AlertDialog;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvWelcomeHeader, tvDepartment, tvEmail, tvCampus;
-    private CardView learnCard, contributeCard, assistantCard, vacancesCard, documentCard;
+    private CardView presenceCard, mapsCard, learnCard, contributeCard, assistantCard, vacancesCard, documentCard;
     private ImageView logoutIcon;
-
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private String currentGroupId = ""; // Variable pour stocker l'ID du groupe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);  // your layout file name
+        setContentView(R.layout.activity_main);
 
-        // Initialize Firestore and Auth
+        // Initialisations Firebase
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        // Link UI elements
+        // Liaison des vues
         tvWelcomeHeader = findViewById(R.id.tvWelcomeHeader);
         tvDepartment = findViewById(R.id.tvDepartment);
         tvEmail = findViewById(R.id.tvEmail);
         tvCampus = findViewById(R.id.tvCampus);
         learnCard = findViewById(R.id.learnCard);
-        contributeCard = findViewById(R.id.contributeCard); // Planning card
-        assistantCard = findViewById(R.id.assistantCard); // Assistant card
+        contributeCard = findViewById(R.id.contributeCard);
+        assistantCard = findViewById(R.id.assistantCard);
         vacancesCard = findViewById(R.id.vacancesCard);
         documentCard = findViewById(R.id.practiceCard);
-        logoutIcon = findViewById(R.id.logoutIcon); // Initialize logout icon
+        logoutIcon = findViewById(R.id.logoutIcon);
+        mapsCard = findViewById(R.id.map);
+        presenceCard = findViewById(R.id.presencesCard);
 
-        // Set up logout functionality
+        // Configuration des listeners
         setupLogoutButton();
+        setupCardListeners();
 
+        // Charger les données utilisateur et le groupe
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            fetchUserData(currentUser.getUid());
+            fetchUserGroup(currentUser.getUid()); // Nouvelle méthode pour récupérer le groupe
+        } else {
+            Toast.makeText(this, "No user signed in", Toast.LENGTH_LONG).show();
+            redirectToLogin();
+        }
+    }
+
+    private void setupCardListeners() {
         documentCard.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, DocumentActivity.class);  // Vérifie que le nom est bien DocumentActivity
+            Intent intent = new Intent(MainActivity.this, DocumentActivity.class);
             startActivity(intent);
         });
 
@@ -58,37 +73,57 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Set click listener for the planning card
         contributeCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, WeeklyScheduleActivity.class);
             startActivity(intent);
         });
 
-        // Set click listener for the assistant card
         assistantCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AssistantVirtuelActivity.class);
             startActivity(intent);
         });
 
-        // Set click listener for the absence card
         learnCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RattrapageActivity.class);
             startActivity(intent);
         });
 
-        // Get current user
-        FirebaseUser currentUser = auth.getCurrentUser();
+        mapsCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, maps.class);
+            startActivity(intent);
+        });
 
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            fetchUserData(userId);
-        } else {
-            Toast.makeText(this, "No user signed in", Toast.LENGTH_LONG).show();
-            // Here you can redirect to login screen if needed
-            redirectToLogin();
-        }
+        presenceCard.setOnClickListener(v -> {
+            if (!currentGroupId.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, GroupListActivity.class);
+                intent.putExtra("GROUP_ID", currentGroupId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Groupe non disponible", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    // Nouvelle méthode pour récupérer le groupe de l'utilisateur
+    private void fetchUserGroup(String userId) {
+        db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Supposons que l'utilisateur a un champ 'groups' avec une liste d'IDs de groupes
+                        // Nous prenons le premier groupe pour cet exemple
+                        List<String> groups = (List<String>) documentSnapshot.get("groups");
+                        if (groups != null && !groups.isEmpty()) {
+                            currentGroupId = groups.get(0); // Prend le premier groupe
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erreur de chargement du groupe", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    // ... [Le reste de vos méthodes existantes (setupLogoutButton, showLogoutConfirmationDialog, etc.)] ...
     private void setupLogoutButton() {
         logoutIcon.setOnClickListener(v -> showLogoutConfirmationDialog());
     }
@@ -103,22 +138,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void performLogout() {
-        // Sign out from Firebase
         auth.signOut();
-
-        // Show logout success message
         Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-
-        // Redirect to login screen
         redirectToLogin();
     }
 
     private void redirectToLogin() {
-        // Replace LoginActivity.class with your actual login activity class name
         Intent intent = new Intent(MainActivity.this, Signin.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish(); // Close the current activity
+        finish();
     }
 
     private void fetchUserData(String userId) {
